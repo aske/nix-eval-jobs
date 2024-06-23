@@ -54,8 +54,8 @@ static nix::Value *releaseExprTopLevelValue(nix::EvalState &state,
     nix::Value vTop;
 
     if (args.fromArgs) {
-        nix::Expr *e =
-            state.parseExprFromString(args.releaseExpr, state.rootPath("."));
+        nix::Expr *e = state.parseExprFromString(
+            args.releaseExpr, state.rootPath(nix::CanonPath::fromCwd()));
         state.eval(e, vTop);
     } else {
         state.evalFile(lookupFileArg(state, args.releaseExpr), vTop);

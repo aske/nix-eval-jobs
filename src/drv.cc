@@ -50,11 +50,9 @@ Drv::Drv(std::string &attrPath, nix::EvalState &state,
                 outputs[out.first] = localStore->printStorePath(*out.second);
         }
     } catch (const std::exception &e) {
-        state
-            .error<nix::EvalError>(
+      throw nix::EvalError(
                 "derivation '%s' does not have valid outputs: %s", attrPath,
-                e.what())
-            .debugThrow();
+                e.what());
     }
 
     if (args.meta) {
